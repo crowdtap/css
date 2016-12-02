@@ -269,7 +269,7 @@ ul.user-list li span a:hover { color: red; }
 
 Styles are resolved during the renderer's layout pass. The selectors are
 resolved right to left, exiting when it has been detected the selector does not
-match. Therefore, in this example every a tag has to be inspected to see if it
+match. Therefore, in this example every `<a/>` tag has to be inspected to see if it
 resides inside a span and a list. As you can imagine this requires a lot of DOM
 walking and and for large documents can cause a significant increase in the
 layout time. For further reading checkout:
