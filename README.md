@@ -16,7 +16,7 @@
     - [OOCSS and BEM](#oocss-and-bem)
     - [ID Selectors](#id-selectors)
     - [JavaScript hooks](#javascript-hooks)
-    - [Border](#border)
+    - [MediaQueries](#media-queries)
   1. [Performnace](#performance)
     - [Specificity](#specificity)
   1. [Sass](#sass)
@@ -233,6 +233,24 @@ We recommend creating JavaScript-specific classes to bind to, prefixed with `.js
 
 ```html
 <button class="btn btn-primary js-request-to-book">Request to Book</button>
+```
+
+### Media Queries
+
+Place media queries as close to their relevant rule sets whenever possible.
+Don't bundle them all in a separate stylesheet or at the end of the document.
+Doing so only makes it easier for folks to miss them in the future. Here's a
+typical setup.
+```css
+.element { ... }
+.element-avatar { ... }
+.element-selected { ... }
+
+@media (min-width: 480px) {
+    .element { ...}
+      .element-avatar { ... }
+        .element-selected { ... }
+}
 ```
 
 <a name="performance"></a>
