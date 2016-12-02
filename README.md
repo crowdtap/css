@@ -11,10 +11,14 @@
   1. [CSS](#css)
     - [Formatting](#formatting)
     - [Comments](#comments)
+    - [Colors](#colors)
+    - [Quotes](#quotes)
     - [OOCSS and BEM](#oocss-and-bem)
     - [ID Selectors](#id-selectors)
     - [JavaScript hooks](#javascript-hooks)
     - [Border](#border)
+  1. [Performnace](#performance)
+    - [Specificity](#specificity)
   1. [Sass](#sass)
     - [Syntax](#syntax)
     - [Ordering](#ordering-of-property-declarations)
@@ -113,6 +117,56 @@ Finally, properties are what give the selected elements of a rule declaration th
   - Uses of z-index
   - Compatibility or browser-specific hacks
 
+* Prefer line comments (`//` in Sass-land) to block comments.
+* Prefer comments on their own line. Avoid end-of-line comments.
+* Write detailed comments for code that isn't self-documenting:
+  - Uses of z-index
+  - Compatibility or browser-specific hacks
+
+### Colors
+
+When implementing feature styles, you should only be using color variables provided by theme.css
+
+When adding a color variable to theme.css, only use colors available to you by
+the collor pallete. Those should be listed to you in a separate file called
+`color_pallete.css`.
+
+Using HEX color units is preffered over RGB, RGBA, named, HSL, or HSLA values.
+
+**Bad**
+
+```css
+rgb(50, 50, 50);
+rgba(50, 50, 50, 0.2);
+white;
+hsl(120, 100%, 50%);
+hsla(120, 100%, 50%, 1);
+```
+
+**Good**
+
+```css
+#FFF;
+#FFFFFF;
+```
+
+### Quotes
+
+Quotes are optional in CSS and LESS. We use double quotes as it is visually
+clearer that the string is not a selector or a style property.
+
+**Good**
+```css
+background-image: url("/img/you.jpg");
+font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial;
+```
+
+**Bad**
+```css
+background-image: url(/img/you.jpg);
+font-family: Helvetica Neue Light, Helvetica Neue, Helvetica, Arial;
+```
+
 ### OOCSS and BEM
 
 We encourage some combination of OOCSS and BEM for these reasons:
@@ -181,23 +235,43 @@ We recommend creating JavaScript-specific classes to bind to, prefixed with `.js
 <button class="btn btn-primary js-request-to-book">Request to Book</button>
 ```
 
-### Border
+<a name="performance"></a>
+## Performance
 
-Use `0` instead of `none` to specify that a style has no border.
+<a name="specificity"></a>
+### Specificity
 
-**Bad**
+Although in the name (cascading style sheets) cascading can introduce
+unnecessary performance overhead for applying styles. Take the following
+example:
 
 ```css
-.foo {
-  border: none;
+ul.user-list li span a:hover { color: red; }
+```
+
+Styles are resolved during the renderer's layout pass. The selectors are
+resolved right to left, exiting when it has been detected the selector does not
+match. Therefore, in this example every a tag has to be inspected to see if it
+resides inside a span and a list. As you can imagine this requires a lot of DOM
+walking and and for large documents can cause a significant increase in the
+layout time. For further reading checkout:
+https://developers.google.com/speed/docs/best-practices/rendering#UseEfficientCSSSelectors
+
+If we know we want to give all `a` elements inside the `.user-list` red on hover
+we can simplify this style to:
+
+```css
+.user-list > a:hover {
+    color: red;
 }
 ```
 
-**Good**
+If we want to only style specific `a` elements inside `.user-list` we can give
+them a specific class:
 
 ```css
-.foo {
-  border: 0;
+.user-list > .link-primary:hover {
+    color: red;
 }
 ```
 
