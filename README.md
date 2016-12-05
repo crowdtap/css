@@ -11,10 +11,11 @@
   1. [CSS](#css)
     - [Formatting](#formatting)
     - [Comments](#comments)
+    - [Colors](#colors)
+    - [Quotes](#quotes)
     - [OOCSS and BEM](#oocss-and-bem)
     - [ID Selectors](#id-selectors)
     - [JavaScript hooks](#javascript-hooks)
-    - [Border](#border)
     - [MediaQueries](#media-queries)
   1. [Sass](#sass)
     - [Syntax](#syntax)
@@ -114,6 +115,56 @@ Finally, properties are what give the selected elements of a rule declaration th
   - Uses of z-index
   - Compatibility or browser-specific hacks
 
+* Prefer line comments (`//` in Sass-land) to block comments.
+* Prefer comments on their own line. Avoid end-of-line comments.
+* Write detailed comments for code that isn't self-documenting:
+  - Uses of z-index
+  - Compatibility or browser-specific hacks
+
+### Colors
+
+When implementing feature styles, you should only be using color variables provided by theme.css
+
+When adding a color variable to theme.css, only use colors available to you by
+the collor pallete. Those should be listed to you in a separate file called
+`color_pallete.css`.
+
+Using HEX color units is preffered over RGB, RGBA, named, HSL, or HSLA values.
+
+**Bad**
+
+```css
+rgb(50, 50, 50);
+rgba(50, 50, 50, 0.2);
+white;
+hsl(120, 100%, 50%);
+hsla(120, 100%, 50%, 1);
+```
+
+**Good**
+
+```css
+#FFF;
+#FFFFFF;
+```
+
+### Quotes
+
+Quotes are optional in CSS and LESS. We use double quotes as it is visually
+clearer that the string is not a selector or a style property.
+
+**Good**
+```css
+background-image: url("/img/you.jpg");
+font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial;
+```
+
+**Bad**
+```css
+background-image: url(/img/you.jpg);
+font-family: Helvetica Neue Light, Helvetica Neue, Helvetica, Arial;
+```
+
 ### OOCSS and BEM
 
 We encourage some combination of OOCSS and BEM for these reasons:
@@ -182,27 +233,7 @@ We recommend creating JavaScript-specific classes to bind to, prefixed with `.js
 <button class="btn btn-primary js-request-to-book">Request to Book</button>
 ```
 
-### Border
-
-Use `0` instead of `none` to specify that a style has no border.
-
-**Bad**
-
-```css
-.foo {
-  border: none;
-}
-```
-
-**Good**
-
-```css
-.foo {
-  border: 0;
-}
-```
-
-## Media Queries
+### Media Queries
 
 Place media queries as close to their relevant rule sets whenever possible.
 Don't bundle them all in a separate stylesheet or at the end of the document.
