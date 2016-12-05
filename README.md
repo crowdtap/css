@@ -17,8 +17,6 @@
     - [ID Selectors](#id-selectors)
     - [JavaScript hooks](#javascript-hooks)
     - [MediaQueries](#media-queries)
-  1. [Performnace](#performance)
-    - [Specificity](#specificity)
   1. [Sass](#sass)
     - [Syntax](#syntax)
     - [Ordering](#ordering-of-property-declarations)
@@ -250,46 +248,6 @@ typical setup.
     .element { ...}
       .element-avatar { ... }
         .element-selected { ... }
-}
-```
-
-<a name="performance"></a>
-## Performance
-
-<a name="specificity"></a>
-### Specificity
-
-Although in the name (cascading style sheets) cascading can introduce
-unnecessary performance overhead for applying styles. Take the following
-example:
-
-```css
-ul.user-list li span a:hover { color: red; }
-```
-
-Styles are resolved during the renderer's layout pass. The selectors are
-resolved right to left, exiting when it has been detected the selector does not
-match. Therefore, in this example every `<a/>` tag has to be inspected to see if it
-resides inside a span and a list. As you can imagine this requires a lot of DOM
-walking and and for large documents can cause a significant increase in the
-layout time. For further reading checkout:
-https://developers.google.com/speed/docs/best-practices/rendering#UseEfficientCSSSelectors
-
-If we know we want to give all `a` elements inside the `.user-list` red on hover
-we can simplify this style to:
-
-```css
-.user-list > a:hover {
-    color: red;
-}
-```
-
-If we want to only style specific `a` elements inside `.user-list` we can give
-them a specific class:
-
-```css
-.user-list > .link-primary:hover {
-    color: red;
 }
 ```
 
