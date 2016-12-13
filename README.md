@@ -1,6 +1,6 @@
-# Airbnb CSS / Sass Styleguide
+# Crowdtap CSS
 
-*A mostly reasonable approach to CSS and Sass*
+*A mostly reasonable approach to CSS
 
 ## Table of Contents
 
@@ -17,14 +17,6 @@
     - [ID Selectors](#id-selectors)
     - [JavaScript hooks](#javascript-hooks)
     - [MediaQueries](#media-queries)
-  1. [Sass](#sass)
-    - [Syntax](#syntax)
-    - [Ordering](#ordering-of-property-declarations)
-    - [Variables](#variables)
-    - [Mixins](#mixins)
-    - [Extend directive](#extend-directive)
-    - [Nested selectors](#nested-selectors)
-  1. [Translation](#translation)
 
 ## Terminology
 
@@ -109,13 +101,7 @@ Finally, properties are what give the selected elements of a rule declaration th
 
 ### Comments
 
-* Prefer line comments (`//` in Sass-land) to block comments.
-* Prefer comments on their own line. Avoid end-of-line comments.
-* Write detailed comments for code that isn't self-documenting:
-  - Uses of z-index
-  - Compatibility or browser-specific hacks
-
-* Prefer line comments (`//` in Sass-land) to block comments.
+* Prefer line comments (`//`) to block comments.
 * Prefer comments on their own line. Avoid end-of-line comments.
 * Write detailed comments for code that isn't self-documenting:
   - Uses of z-index
@@ -126,8 +112,8 @@ Finally, properties are what give the selected elements of a rule declaration th
 When implementing feature styles, you should only be using color variables provided by theme.css
 
 When adding a color variable to theme.css, only use colors available to you by
-the collor pallete. Those should be listed to you in a separate file called
-`color_pallete.css`.
+the color palette. Those should be listed to you in a separate file called
+`color_palette.css`.
 
 Using HEX color units is preferred over RGB, RGBA, named, HSL, or HSLA values.
 
@@ -147,12 +133,14 @@ hsla(120, 100%, 50%, 1);
 #FFFFFF;
 ```
 
-Using RGBA to be able to set opacity is not a big problem, but have the downside
+Using RGBA to set opacity is not a big problem, but has the downside
 of using hardcoded color values instead of using the theme variables.
 
 **Not so good**
 
-```rgba(50, 50, 50, 0.2);```
+```css
+rgba(50, 50, 50, 0.2);
+```
 
 ### Quotes
 
@@ -190,26 +178,9 @@ We encourage some combination of OOCSS and BEM for these reasons:
   * CSS Trick's [BEM 101](https://css-tricks.com/bem-101/)
   * Harry Roberts' [introduction to BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 
-We recommend a variant of BEM with PascalCased “blocks”, which works particularly well when combined with components (e.g. React). Underscores and dashes are still used for modifiers and children.
+We recommend a variant of BEM with PascalCased “blocks”.
 
 **Example**
-
-```jsx
-// ListingCard.jsx
-function ListingCard() {
-  return (
-    <article class="ListingCard ListingCard--featured">
-
-      <h1 class="ListingCard__title">Adorable 2BR in the sunny Mission</h1>
-
-      <div class="ListingCard__content">
-        <p>Vestibulum id ligula porta felis euismod semper.</p>
-      </div>
-
-    </article>
-  );
-}
-```
 
 ```css
 /* ListingCard.css */
@@ -256,101 +227,3 @@ typical setup.
         .element-selected { ... }
 }
 ```
-
-## Sass
-
-### Syntax
-
-* Use the `.scss` syntax, never the original `.sass` syntax
-* Order your regular CSS and `@include` declarations logically (see below)
-
-### Ordering of property declarations
-
-1. Property declarations
-
-    List all standard property declarations, anything that isn't an `@include` or a nested selector.
-
-    ```scss
-    .btn-green {
-      background: green;
-      font-weight: bold;
-      // ...
-    }
-    ```
-
-2. `@include` declarations
-
-    Grouping `@include`s at the end makes it easier to read the entire selector.
-
-    ```scss
-    .btn-green {
-      background: green;
-      font-weight: bold;
-      @include transition(background 0.5s ease);
-      // ...
-    }
-    ```
-
-3. Nested selectors
-
-    Nested selectors, _if necessary_, go last, and nothing goes after them. Add whitespace between your rule declarations and nested selectors, as well as between adjacent nested selectors. Apply the same guidelines as above to your nested selectors.
-
-    ```scss
-    .btn {
-      background: green;
-      font-weight: bold;
-      @include transition(background 0.5s ease);
-
-      .icon {
-        margin-right: 10px;
-      }
-    }
-    ```
-
-### Variables
-
-Prefer dash-cased variable names (e.g. `$my-variable`) over camelCased or snake_cased variable names. It is acceptable to prefix variable names that are intended to be used only within the same file with an underscore (e.g. `$_my-variable`).
-
-### Mixins
-
-Mixins should be used to DRY up your code, add clarity, or abstract complexity--in much the same way as well-named functions. Mixins that accept no arguments can be useful for this, but note that if you are not compressing your payload (e.g. gzip), this may contribute to unnecessary code duplication in the resulting styles.
-
-### Extend directive
-
-`@extend` should be avoided because it has unintuitive and potentially dangerous behavior, especially when used with nested selectors. Even extending top-level placeholder selectors can cause problems if the order of selectors ends up changing later (e.g. if they are in other files and the order the files are loaded shifts). Gzipping should handle most of the savings you would have gained by using `@extend`, and you can DRY up your stylesheets nicely with mixins.
-
-### Nested selectors
-
-**Do not nest selectors more than three levels deep!**
-
-```scss
-.page-container {
-  .content {
-    .profile {
-      // STOP!
-    }
-  }
-}
-```
-
-When selectors become this long, you're likely writing CSS that is:
-
-* Strongly coupled to the HTML (fragile) *—OR—*
-* Overly specific (powerful) *—OR—*
-* Not reusable
-
-
-Again: **never nest ID selectors!**
-
-If you must use an ID selector in the first place (and you should really try not to), they should never be nested. If you find yourself doing this, you need to revisit your markup, or figure out why such strong specificity is needed. If you are writing well formed HTML and CSS, you should **never** need to do this.
-
-## Translation
-
-  This style guide is also available in other languages:
-
-  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese (Simplified)**: [Zhangjd/css-style-guide](https://github.com/Zhangjd/css-style-guide)
-  - ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Japanese**: [nao215/css-style-guide](https://github.com/nao215/css-style-guide)
-  - ![ko](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [CodeMakeBros/css-style-guide](https://github.com/CodeMakeBros/css-style-guide)
-  - ![PT-BR](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Portuguese**: [felipevolpatto/css-style-guide](https://github.com/felipevolpatto/css-style-guide)  
-  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian**: [Nekorsis/css-style-guide](https://github.com/Nekorsis/css-style-guide)
-  - ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Spain.png) **Spanish**: [ismamz/guia-de-estilo-css](https://github.com/ismamz/guia-de-estilo-css)
