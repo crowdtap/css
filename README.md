@@ -69,6 +69,7 @@ Finally, properties are what give the selected elements of a rule declaration th
 * In properties, put a space after, but not before, the `:` character.
 * Put closing braces `}` of rule declarations on a new line
 * Put blank lines between rule declarations
+* Use double quotes consistently. e.g., `content: ""`.
 
 **Bad**
 
@@ -101,7 +102,6 @@ Finally, properties are what give the selected elements of a rule declaration th
 
 ### Comments
 
-* Prefer line comments (`//`) to block comments.
 * Prefer comments on their own line. Avoid end-of-line comments.
 * Write detailed comments for code that isn't self-documenting:
   - Uses of z-index
@@ -117,6 +117,13 @@ the color palette. Those should be listed to you in a separate file called
 
 Using HEX color units is preferred over RGB, RGBA, named, HSL, or HSLA values.
 
+**Good**
+
+```css
+#FFF;
+#FFFFFF;
+```
+
 **Bad**
 
 ```css
@@ -124,13 +131,6 @@ rgb(50, 50, 50);
 white;
 hsl(120, 100%, 50%);
 hsla(120, 100%, 50%, 1);
-```
-
-**Good**
-
-```css
-#FFF;
-#FFFFFF;
 ```
 
 Using RGBA to set opacity is not a big problem, but has the downside
@@ -178,21 +178,21 @@ We encourage some combination of OOCSS and BEM for these reasons:
   * CSS Trick's [BEM 101](https://css-tricks.com/bem-101/)
   * Harry Roberts' [introduction to BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 
-We recommend a variant of BEM with PascalCased “blocks”.
+We recommend a variant of BEM with camelCased “blocks”.
 
 **Example**
 
 ```css
-/* ListingCard.css */
-.ListingCard { }
-.ListingCard--featured { }
-.ListingCard__title { }
-.ListingCard__content { }
+/* listingCard.css */
+.listingCard { }
+.listingCard--featured { }
+.listingCard-title { }
+.listingCard-content { }
 ```
 
-  * `.ListingCard` is the “block” and represents the higher-level component
-  * `.ListingCard__title` is an “element” and represents a descendant of `.ListingCard` that helps compose the block as a whole.
-  * `.ListingCard--featured` is a “modifier” and represents a different state or variation on the `.ListingCard` block.
+  * `.listingCard` is the “block” and represents the higher-level component
+  * `.listingCard-title` is an “element” and represents a descendant of `.listingCard` that helps compose the block as a whole.
+  * `.listingCard-featured` is a “modifier” and represents a different state or variation on the `.listingCard` block.
 
 ### ID selectors
 
@@ -218,12 +218,12 @@ Doing so only makes it easier for folks to miss them in the future. Here's a
 typical setup.
 ```css
 .element { ... }
+.element--selected { ... }
 .element-avatar { ... }
-.element-selected { ... }
 
 @media (min-width: 480px) {
-    .element { ...}
-      .element-avatar { ... }
-        .element-selected { ... }
+  .element { ...}
+  .element--selected { ... }
+  .element-avatar { ... }
 }
 ```
